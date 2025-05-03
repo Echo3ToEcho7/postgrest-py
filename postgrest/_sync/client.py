@@ -57,7 +57,7 @@ class SyncPostgrestClient(BasePostgrestClient):
             verify=verify,
             proxy=proxy,
             follow_redirects=True,
-            http2=True,
+            http2=False,
         )
 
     def schema(self, schema: str):
