@@ -50,7 +50,7 @@ class SyncPostgrestClient(BasePostgrestClient):
         verify: bool = True,
         proxy: Optional[str] = None,
     ) -> SyncClient:
-        transport = AsyncHTTPTransport(
+        transport = HTTPTransport(
             retries=3,
             http2=False,
             limits=Limits(
