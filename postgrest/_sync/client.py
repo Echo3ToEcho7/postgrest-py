@@ -52,7 +52,7 @@ class SyncPostgrestClient(BasePostgrestClient):
     ) -> SyncClient:
         transport = AsyncHTTPTransport(
             retries=3,
-            http2=False
+            http2=False,
             limits=Limits(
                 max_connections=100,
                 max_keepalive_connections=1,
