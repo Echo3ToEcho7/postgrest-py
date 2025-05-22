@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, Optional, Union, cast
 
 from deprecation import deprecated
-from httpx import Headers, QueryParams, Timeout
+from httpx import Headers, QueryParams, Timeout, HTTPTransport
 
 from ..base_client import BasePostgrestClient
 from ..constants import (
@@ -50,9 +50,19 @@ class SyncPostgrestClient(BasePostgrestClient):
         verify: bool = True,
         proxy: Optional[str] = None,
     ) -> SyncClient:
+        transport = AsyncHTTPTransport(
+            retries=3,
+            http2=False
+            limits=Limits(
+                max_connections=100,
+                max_keepalive_connections=1,
+                keepalive_expiry=None,
+            )
+        )
         return SyncClient(
             base_url=base_url,
             headers=headers,
+            transport=transport,
             timeout=timeout,
             verify=verify,
             proxy=proxy,
